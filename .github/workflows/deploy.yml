@@ -1,9 +1,9 @@
-name: Deploy to EC2
+asname: Deploy to EC2
 
 on:
   push:
     branches:
-      - main  # ←あなたのブランチが main なのでこれでOK！変更しました！
+      - main  # ←あなたのブランチが main なのでこれでOK！Elasticに変更しました！
 
 jobs:
   deploy:
