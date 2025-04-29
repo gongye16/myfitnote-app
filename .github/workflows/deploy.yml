@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main  # ←あなたのブランチが main なのでこれでOK！Elasticに変更しました！
+      - main  # ←あなたのブランチが main なのでこれでOK！Elasticに変更できたかなあ
 
 jobs:
   deploy:
