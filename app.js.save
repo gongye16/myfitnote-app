@@ -1,0 +1,45 @@
+const express = require('express');
+const mysql = require('mysql');
+
+const app = express();
+app.use(express.json());
+
+// MySQL接続設定
+const db = mysql.createConnection({
+  host: 'myfitnote-db.cxuya6m2ioxl.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: '123qwecc',
+  database: 'myfitnote'
+});
+
+db.connect((err) => {
+  if (err) throw err;
+  console.log('MySQL connected!');
+});
+
+// ルート表示
+app.get('/', (req, res) => {
+  res.send('<h1>筋トレToDo APIが起動中??</h1>');
+});
+
+// ToDo取得
+app.get('/todos', (req, res) => {
+  db.query('SELECT * FROM todos', (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+// ToDo追加
+app.post('/todos', (req, res) => {
+  const { task, reps } = req.body;
+  db.query('INSERT INTO todos (task, reps) VALUES (?, ?)', [task, reps], (err, result) => {
+    if (err) throw err;
+    res.send('ToDo追加完了！');
+  });
+});
+
+// サーバ起動
+app.listen(3000, '0.0.0.0') => {
+  console.log('Server is running on port 3000');
+});
