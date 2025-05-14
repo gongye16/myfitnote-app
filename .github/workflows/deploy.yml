@@ -13,16 +13,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: SSH and Deploy
+    - name: SSH and Deploy via Docker Compose
       uses: appleboy/ssh-action@v0.1.6
       with:
         host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
+        username: ec2-user
+        key: ${{ secrets.PRIVATE_KEY }}
         script: |
           cd /home/ec2-user/myfitnote
-          git pull origin main
-          docker rm -f myfitnote-container || true
-          docker build -t myfitnote-app .
-          docker run -d -p 3000:3000 --env-file .env --name myfitnote-container myfitnote-app
+          git pull origin master
+          docker compose down
+          docker compose up -d --build
